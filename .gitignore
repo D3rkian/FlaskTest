@@ -1,0 +1,20 @@
+# Ambiente Virtual do Python
+# Motivo: É específico da sua máquina e pode ter centenas de megabytes.
+# Outros desenvolvedores criarão o seu próprio venv.
+venv/
+
+# Arquivos de Cache do Python
+# Motivo: São arquivos temporários que o Python cria para rodar mais rápido.
+# Não são parte do seu código-fonte.
+__pycache__/
+*.pyc
+
+# Banco de Dados
+# Motivo: Contém dados de teste, não código. Em um time, cada um tem seu banco.
+# A estrutura do banco já está salva na pasta 'migrations'.
+/dbase/
+
+# Arquivos de configuração de ambiente
+# Motivo: Segurança! Este arquivo pode conter senhas e chaves secretas.
+# Nunca deve ser enviado para um repositório.
+.flaskenv
