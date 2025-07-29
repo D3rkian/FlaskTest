@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
-{% block titulo %}
-    Página Protegida
-{% endblock %}
+{% block titulo %}Página Principal{% endblock %}
 
 {% block conteudo %}
-    <h1 class="display-4">Flask rodando</h1>
+    <h1 class="display-4">Olá, {{ current_user.username }}!</h1>
+    <p class="lead">Você está na área protegida do sistema.</p>
+    <div class="mt-4">
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Deslogar</a>
+    </div>
 {% endblock %}

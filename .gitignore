@@ -12,9 +12,9 @@ __pycache__/
 # Banco de Dados
 # Motivo: Contém dados de teste, não código. Em um time, cada um tem seu banco.
 # A estrutura do banco já está salva na pasta 'migrations'.
-/dbase/
+#/dbase/
 
 # Arquivos de configuração de ambiente
 # Motivo: Segurança! Este arquivo pode conter senhas e chaves secretas.
 # Nunca deve ser enviado para um repositório.
-.flaskenv
+#.flaskenv

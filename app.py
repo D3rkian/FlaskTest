@@ -1,28 +1,34 @@
 import os
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask import Flask
+from extensions import db, migrate, lm
+from models import Usuario
 
-db = SQLAlchemy()
-migrate = Migrate()
+def create_app():
+    app = Flask(__name__)
 
+    
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    caminho_db = os.path.join(os.path.abspath(os.path.dirname(__file__)), os.getenv('DB_PATH'))
+    app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{caminho_db}"
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app = Flask(__name__)
+    
+    db.init_app(app)
+    migrate.init_app(app, db)
+    lm.init_app(app)
 
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-caminho_db = os.path.join(os.path.abspath(os.path.dirname(__file__)), os.getenv('DB_PATH'))
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{caminho_db}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    lm.login_view = 'auth.login_page'
 
-db.init_app(app)
-migrate.init_app(app, db)
+    
+    from controllers.auth_controller import auth_bp
+    app.register_blueprint(auth_bp)
 
-class Usuario(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128), nullable=False)
+    
+    @lm.user_loader
+    def load_user(user_id):
+        return Usuario.query.get(int(user_id))
 
-@app.route('/')
-def index():
+    return app
 
-    return render_template('index.html')
+app = create_app()
