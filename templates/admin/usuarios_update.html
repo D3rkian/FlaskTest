@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block titulo %}Editar Usuário{% endblock %}
+{% block conteudo %}
+<div class="container mt-4" style="max-width: 500px;">
+    <h1>Editar Usuário: {{ usuario.username }}</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="username" class="form-label">Nome de Usuário:</label>
+            <input type="text" class="form-control" name="username" value="{{ usuario.username }}">
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Papel (Role):</label>
+            <select name="role" class="form-select">
+                <option value="user" {% if usuario.role == 'user' %}selected{% endif %}>User</option>
+                <option value="admin" {% if usuario.role == 'admin' %}selected{% endif %}>Admin</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        <a href="{{ url_for('auth.lista_usuarios') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

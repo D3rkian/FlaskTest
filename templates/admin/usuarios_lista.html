@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block titulo %}Painel de Usuários{% endblock %}
+{% block conteudo %}
+<div class="container mt-4" style="max-width: 800px;">
+    <h1 class="mb-4">Gerenciamento de Usuários</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.role }}</td>
+                <td>
+                    <a href="{{ url_for('auth.update_usuario', id=usuario.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{{ url_for('auth.delete_usuario', id=usuario.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('auth.home') }}" class="btn btn-secondary mt-3">Voltar</a>
+</div>
+{% endblock %}

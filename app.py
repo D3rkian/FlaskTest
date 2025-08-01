@@ -32,3 +32,24 @@ def create_app():
     return app
 
 app = create_app()
+
+@app.cli.command("novo-adm")
+def novo_adm():
+    
+    
+    username = input("Digite o nome de usuário para o admin: ")
+    password = input("Digite a senha para o admin: ")
+
+    
+    if Usuario.query.filter_by(username=username).first():
+        print(f"Usuário '{username}' já existe.")
+        return
+
+    
+    admin_user = Usuario(username=username, role='admin')
+    admin_user.set_password(password)
+
+    
+    db.session.add(admin_user)
+    db.session.commit()
+    print(f"Administrador '{username}' criado!")
