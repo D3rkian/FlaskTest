@@ -85,7 +85,7 @@ def lista_usuarios():
 @auth_bp.route('/admin/usuarios/update/<int:id>', methods=['GET', 'POST'])
 @admin_required
 def update_usuario(id):
-    usuario = Usuario.query.get_or_404(id) # Pega o usuário ou retorna erro 404
+    usuario = Usuario.query.get_or_404(id) 
     if request.method == 'POST':
         usuario.username = request.form.get('username')
         
