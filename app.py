@@ -38,12 +38,15 @@ def novo_adm():
     
     
     username = input("Digite o nome de usuário para o admin: ")
-    password = input("Digite a senha para o admin: ")
 
-    
     if Usuario.query.filter_by(username=username).first():
         print(f"Usuário '{username}' já existe.")
         return
+    
+    password = input("Digite a senha para o admin: ")
+
+    
+
 
     
     admin_user = Usuario(username=username, role='admin')
